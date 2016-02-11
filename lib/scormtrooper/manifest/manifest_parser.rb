@@ -5,17 +5,21 @@ module Scormtrooper
 
       def initialize(source)
         @source = source
-        @manifest = Manifest.new
       end
 
       def parse
+        manifest = Manifest.new
+
         Nokogiri::XML::Reader(source).each do |node|
           case node
             when Utils.is_beginning_of('organizations')
-              @manifest.organizations = OrganizationsParser.new(node).parse
+              manifest.organizations = OrganizationsParser.new(node).parse
+            when Utils.is_beginning_of('resources')
+              manifest.resources = ResourcesParser.new(node).parse
           end
         end
-        @manifest
+
+        manifest
       end
     end
   end
