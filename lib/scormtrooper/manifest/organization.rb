@@ -7,6 +7,14 @@ module Scormtrooper
         @items = []
         @isdefault = false
       end
+
+      def first_item
+        items.first.first_item
+      end
+
+      def menu_needed?
+        items.count > 1
+      end
     end
   end
 end
